@@ -113,17 +113,21 @@
     function toShowActiveSlide(evt) {
         let eventTarget = evt.target;
         if (eventTarget.classList.contains('slider_control-button')) {
-            sliderControlButtons.forEach(function (it) {
+            /*sliderControlButtons.forEach(function (it) {
                 it.classList.remove('slider_control-button--active');
-            });
-            /*for (let i = 0; i ) {
-
-            }*/
+            });*/
+            for (let i = 0; i < sliderControlButtons.length; i++) {
+                sliderControlButtons[i].classList.remove('slider_control-button--active');
+            }
             eventTarget.classList.add('slider_control-button--active');
 
-            sliderLayers.forEach(function (it) {
+            /*sliderLayers.forEach(function (it) {
                 it.classList.add('hidden');
-            });
+            });*/
+
+            for (let i = 0; i < sliderLayers.length; i++) {
+                sliderLayers[i].classList.add('hidden');
+            }
             sliderLayers[parseInt(eventTarget.dataset.type)].classList.remove('hidden');
         }
     }
