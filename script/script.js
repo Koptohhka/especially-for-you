@@ -1,19 +1,50 @@
 (() => {
-    //это канвас
-    let canvasElement = document.querySelector('.slider__control-canvas')
-    let ctx = canvasElement.getContext('2d');
 
-    let canvasResize = () => {
-        canvasElement.style.width = '100%';
-        canvasElement.style.height = '10px';
-        canvasElement.style.position = 'absolute';
-        canvasElement.style.top = '23px';
-        canvasElement.style.zIndex = '-5';
+    //тут код переключалок в табличной секции
+    const timeCellsContainer = document.querySelector('.table-popup-list');
+    const timeCells = timeCellsContainer.querySelectorAll('.table-popup-list__item');
+    const infoItemsContainer = document.querySelector('.slider__layer--first');
+
+    let toSelectInfoItem = (evt) => {
+        let infoItemsArray = infoItemsContainer.querySelectorAll('.slider__slider-item');
+        let targetElement = evt.target;
+        if (targetElement.classList.contains('slider__slider-item')) {
+            infoItemsArray.forEach((it) => {
+                it.classList.remove('slider__slider-item--selected')
+            });
+            targetElement.classList.add('slider__slider-item--selected');
+        } else if (targetElement.parentNode.classList.contains('slider__slider-item')) {
+            infoItemsArray.forEach((it) => {
+                it.classList.remove('slider__slider-item--selected')
+            });
+            targetElement.parentNode.classList.add('slider__slider-item--selected');
+        }
     }
-    canvasResize();
-    ctx.beginPath();
-    ctx.fill
-    // это канвас
+
+    let toSelectCell = (evt) => {
+        let targetElement = evt.target;
+        let cells = document.querySelectorAll('.slider-table__data:not(.dayNameCell)');
+        if (targetElement.classList.contains('slider-table__data') && !targetElement.classList.contains('dayNameCell')) {
+            cells.forEach((it) => {
+                it.classList.remove('slider-table__data--selected')
+            });
+            targetElement.classList.add('slider-table__data--selected');
+        }
+    }
+
+    let toSelectTimeCell = (evt) => {
+        if (evt.target.classList.contains('table-popup-list__item')) {
+            timeCells.forEach((it) => {
+                it.classList.remove('table-popup-list__item--selected');
+            });
+            evt.target.classList.add('table-popup-list__item--selected');
+        }
+    }
+
+    timeCellsContainer.addEventListener('click', toSelectTimeCell);
+    infoItemsContainer.addEventListener('click', toSelectInfoItem);
+
+    //тут код переключалок в табличной секции
 
     //это рендер 
     const tableContainer = document.getElementById('slide-table');
@@ -29,25 +60,30 @@
             </div>`
             infoItemsArray.push(infoItem);
         });
-        slideInfoContainer.insertAdjacentHTML('afterbegin', infoItemsArray.join(''))
+        slideInfoContainer.insertAdjacentHTML('beforeend', infoItemsArray.join(''))
     }
     renderInfoItems(window.data.infoItemsDataArray);
 
+    let tableCellCounter = 1;
     let renderTable = (data) => {        
         let rowArray = [];
         data.forEach((it) => {
             let cellsArray = [];
             for (let j = 0; j < it.length; j++) {
-                cellsArray.push(`<td class="slider-table__data">
-                <p class="slider-table__day">${it[j].day}</p>
-                <p class="slider-table__date">${it[j].date}</p>
+                cellsArray.push(`<td class="slider-table__data ${it[j].classNum}">
+                    ${it[j].dayNumber}
                 </td>`);
+                tableCellCounter++;
             }
             let rowItem = `<tr class="slider-table__row">${cellsArray.join('')}</tr>`;
             rowArray.push(rowItem);
+            tableCellCounter++
         });
 
-        tableContainer.insertAdjacentHTML('beforeend', `<table class="slider__table">${rowArray.join('')}</table>`)
+
+
+        tableContainer.insertAdjacentHTML('beforeend', `<table class="slider__table">${rowArray.join('')}</table>`);
+        document.querySelector('.slider__table').addEventListener('click', toSelectCell)
     }
     renderTable(window.data.tableDataArray);
 
@@ -76,4 +112,33 @@
     sliderButtonsContainer.addEventListener('click', toShowActiveSlide)
     //тут заканчивается код слайдера
 
+
 })()
+
+
+
+
+
+
+
+
+/*
+let renderTable = (data) => {        
+        let rowArray = [];
+        data.forEach((it) => {
+            let cellsArray = [];
+            for (let j = 0; j < it.length; j++) {
+                cellsArray.push(`<td class="slider-table__data">
+                <p class="slider-table__day">${it[j].day}</p>
+                <p class="slider-table__date">${it[j].date}</p>
+                </td>`);
+            }
+            let rowItem = `<tr class="slider-table__row">${cellsArray.join('')}</tr>`;
+            rowArray.push(rowItem);
+        });
+
+        tableContainer.insertAdjacentHTML('beforeend', `<table class="slider__table">${rowArray.join('')}</table>`);
+        document.querySelector('.slider__table').addEventListener('click', toSelectCell)
+    }
+    renderTable(window.data.tableDataArray);
+*/

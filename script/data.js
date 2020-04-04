@@ -17,19 +17,34 @@ for (let i = 1; i <= 5; i++) {
 //слайды с информацией о адресе
 
 //табличные данные
-function TableDataConstructor(day, date) {
-    this.day = day;
-    this.date = date;
+function TableDataConstructor(dayNumber, classNum) {
+    this.dayNumber = dayNumber;
+    this.classNum = classNum;
 }
 
+
+let dayNameCellsClasses = ['monCell', 'thueCell', 'wenCell', 'thursCell', 'friCell', 'saturCell', 'snuCell'];
+
+let daysNameArray = ['Пн','вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
+let daysClasses = ['monday', 'thusday', 'wendsday', 'thursday', 'friday', 'suturday', 'sunday'];
+
 let tableDataArray = [];
-let tableCounter = 0;
-for (let i = 1; i <= 5; i++) {
+tableDataArray.push([]);
+for (let  i = 0; i < daysNameArray.length; i++) {
+    let objectItem = new TableDataConstructor(daysNameArray[i], 'dayNameCell');
+    tableDataArray[0].push(objectItem);
+}
+
+
+let tableCellCounter = 1;
+for (let i = 2; i <= 5; i++) {
     tableDataArray.push([]);
-    for (let j = 1; j <= 7; j++) {
-        let objectItem = new TableDataConstructor('пн', '6.04.2020');
+    for (let j = 0; j < daysClasses.length; j++) {
+        let objectItem = new TableDataConstructor(tableCellCounter, daysClasses[j]);
         tableDataArray[i - 1].push(objectItem);
+        tableCellCounter++;
     }
+    tableCellCounter++;
 }
 console.log(tableDataArray);
 
