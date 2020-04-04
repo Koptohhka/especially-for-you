@@ -91,7 +91,7 @@
         for (let i = 0; i < data.length; i++) {
             let cellsArray = [];
             for (let j = 0; j < data[i].length; j++) {
-                cellsArray.push('<td class="slider-table__data ${it[j].classNum}">' + data[i][j].dayNumber + '</td>');
+                cellsArray.push('<td class="slider-table__data '+ data[i][j].classNum + '">' + data[i][j].dayNumber + '</td>');
                 tableCellCounter++;
             }
             let rowItem = '<tr class="slider-table__row">' + cellsArray.join('') + '</tr>';
