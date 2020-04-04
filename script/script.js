@@ -53,11 +53,7 @@
     function renderInfoItems(data) {
         let infoItemsArray = [];
         data.forEach(function (it) {
-            let infoItem = `<div class="slider__slider-item">
-            <h3 class="slider-item__title">${it.adress}</h3>
-            <div class="slider-item__description">${it.workingTime}</div>
-            <a href="#" class="slider-item__phone">${it.phoneNumber}</a>
-            </div>`
+            let infoItem = '<div class="slider__slider-item"><h3 class="slider-item__title">' + it.adress +'</h3><div class="slider-item__description">'+ it.workingTime + '</div><a href="#" class="slider-item__phone">'+ it.phoneNumber +'</a></div>';
             infoItemsArray.push(infoItem);
         });
         slideInfoContainer.insertAdjacentHTML('beforeend', infoItemsArray.join(''))
@@ -70,19 +66,17 @@
         data.forEach(function (it) {
             let cellsArray = [];
             for (let j = 0; j < it.length; j++) {
-                cellsArray.push(`<td class="slider-table__data ${it[j].classNum}">
-                    ${it[j].dayNumber}
-                </td>`);
+                cellsArray.push('<td class="slider-table__data ${it[j].classNum}">'+ it[j].dayNumber +'</td>');
                 tableCellCounter++;
             }
-            let rowItem = `<tr class="slider-table__row">${cellsArray.join('')}</tr>`;
+            let rowItem = '<tr class="slider-table__row">'+ cellsArray.join('') +'</tr>';
             rowArray.push(rowItem);
             tableCellCounter++
         });
 
 
 
-        tableContainer.insertAdjacentHTML('beforeend', `<table class="slider__table">${rowArray.join('')}</table>`);
+        tableContainer.insertAdjacentHTML('beforeend', '<table class="slider__table">'+ rowArray.join('') +'</table>');
         document.querySelector('.slider__table').addEventListener('click', toSelectCell)
     }
     renderTable(window.data.tableDataArray);
