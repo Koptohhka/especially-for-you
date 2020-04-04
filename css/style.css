@@ -181,6 +181,7 @@ body {
     cursor: pointer;
     padding: 12px;
     z-index: 1;
+    font-size: 29px;
 
     transition: 0.2s;
     -webkit-transition: 0.2s;
@@ -243,7 +244,7 @@ body {
     margin: 10px;
     margin-bottom: 20px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 22px;
     transition: 0.2s;
     -webkit-transition: 0.2s;
     -moz-transition: 0.2s;
@@ -267,12 +268,11 @@ body {
     padding-right: 10px;
     border: none;
     margin-bottom: 30px;
-    font-size: 14px;
+    font-size: 18px;
     background-color: #BFBFBF;
 }
 
 .form__input--button {
-    font-size: 16px;
     color: white;
     background-color: #A65353;
     cursor: pointer;
@@ -290,7 +290,7 @@ body {
 .slider__description {
     margin-bottom: 30px;
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
 }
 
 .footer {
@@ -320,11 +320,6 @@ body {
     margin-bottom: 40px;
 }
 
-@media (max-width: 1020px) {
-    .wrapper {}
-
-}
-
 @media(max-width: 780px) {
     .slider__control {
         width: 70%;
@@ -340,8 +335,7 @@ body {
     }
 
     .slider-table__data {
-        word-break: break-all;
-        font-size: 14px;
+        font-size: 24px;
     }
 
     @media (max-width: 680px) {
@@ -355,7 +349,7 @@ body {
             }
 
             .slider-table__data {
-                font-size: 12px;
+                font-size: 20px;
                 padding: 5px;
                 padding-left: 9px;
             }
@@ -365,6 +359,12 @@ body {
                 height: 45px;
                 font-size: 18px;
                 padding-top: 12px;
+            }
+            @media(max-width: 390px) {
+                .slider-table__data {
+                    font-size: 17px;
+                    
+                }
             }
         }
     }
