@@ -11,6 +11,12 @@
 </head>
 
 <body>
+    <div class="popup-wrapper hidden">
+        <div class="form__popup">
+            <p class="popup__text">Вы успешно забронировались.</p>
+            <button class="popup__button">Ок</button>
+        </div>
+    </div>
 
     <main class="main">
 
@@ -65,42 +71,6 @@
                             <li class="table-popup-list__item">04:30</li>
                             <li class="table-popup-list__item">05:00</li>
                             <li class="table-popup-list__item">05:30</li>
-                            <li class="table-popup-list__item">06:00</li>
-                            <li class="table-popup-list__item">06:30</li>
-                            <li class="table-popup-list__item">07:00</li>
-                            <li class="table-popup-list__item">07:30</li>
-                            <li class="table-popup-list__item">08:00</li>
-                            <li class="table-popup-list__item">08:30</li>
-                            <li class="table-popup-list__item">09:00</li>
-                            <li class="table-popup-list__item">09:30</li>
-                            <li class="table-popup-list__item">10:00</li>
-                            <li class="table-popup-list__item">10:30</li>
-                            <li class="table-popup-list__item">11:00</li>
-                            <li class="table-popup-list__item">11:30</li>
-                            <li class="table-popup-list__item">12:00</li>
-                            <li class="table-popup-list__item">12:30</li>
-                            <li class="table-popup-list__item">13:00</li>
-                            <li class="table-popup-list__item">13:30</li>
-                            <li class="table-popup-list__item">14:00</li>
-                            <li class="table-popup-list__item">14:30</li>
-                            <li class="table-popup-list__item">15:00</li>
-                            <li class="table-popup-list__item">15:30</li>
-                            <li class="table-popup-list__item">16:00</li>
-                            <li class="table-popup-list__item">16:30</li>
-                            <li class="table-popup-list__item">17:00</li>
-                            <li class="table-popup-list__item">17:30</li>
-                            <li class="table-popup-list__item">18:00</li>
-                            <li class="table-popup-list__item">18:30</li>
-                            <li class="table-popup-list__item">19:00</li>
-                            <li class="table-popup-list__item">19:30</li>
-                            <li class="table-popup-list__item">20:00</li>
-                            <li class="table-popup-list__item">20:30</li>
-                            <li class="table-popup-list__item">21:00</li>
-                            <li class="table-popup-list__item">21:30</li>
-                            <li class="table-popup-list__item">22:00</li>
-                            <li class="table-popup-list__item">22:30</li>
-                            <li class="table-popup-list__item">23:00</li>
-                            <li class="table-popup-list__item">23:30</li>
                         </ul>
                     </div>
 
@@ -108,8 +78,10 @@
                         <form action="#" class="slider__form" method="POST">
                             <p class="slider__description">Введите ваши данные, чтобы наш менеджер смог с вами
                                 связаться</p>
-                            <input type="text" class="form__input" placeholder="Введите ваше имя">
-                            <input type="text" class="form__input" placeholder="Телефон">
+                            <input type="text" class="form__input" placeholder="Введите ваше имя" id="name-input"
+                                required>
+                            <input type="tel" class="form__input" placeholder="Телефон" id="phone-input" min="13"
+                                max="13" required>
                             <button class="form__input form__input--button">Записаться</button>
                         </form>
                     </div>

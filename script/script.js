@@ -91,7 +91,7 @@
         for (let i = 0; i < data.length; i++) {
             let cellsArray = [];
             for (let j = 0; j < data[i].length; j++) {
-                cellsArray.push('<td class="slider-table__data '+ data[i][j].classNum + '">' + data[i][j].dayNumber + '</td>');
+                cellsArray.push('<td class="slider-table__data ' + data[i][j].classNum + '">' + data[i][j].dayNumber + '</td>');
                 tableCellCounter++;
             }
             let rowItem = '<tr class="slider-table__row">' + cellsArray.join('') + '</tr>';
@@ -135,5 +135,49 @@
     sliderButtonsContainer.addEventListener('click', toShowActiveSlide)
     //тут заканчивается код слайдера
 
+
+    // Валидация формы
+    const nameInput = document.querySelector('#name-input');
+    const phoneInput = document.querySelector('#phone-input');
+
+    const nameRegExp = /w/g;
+
+    nameInput.addEventListener('input', function (evt) {
+        evt.preventDefault();
+
+        if (nameRegExp.test(evt.data)) {
+            nameInput.value += evt.data;
+            console.log(true);
+        } else {
+
+        }
+        console.log(evt);
+    });
+
+
+    //валидация формы
+
+    // модалка офрмы
+    const form = document.querySelector('.slider__form');
+    const popup = document.querySelector('.popup-wrapper');
+
+    function closePopup() {
+        popup.classList.add('hidden');
+    }
+
+    form.addEventListener('submit', function(evt) {
+        evt.preventDefault();
+
+        popup.classList.remove('hidden');
+        document.addEventListener('click', function() {
+            closePopup();
+        })
+    });
+
+    popup.querySelector('.popup__button').addEventListener('click', function() {
+        closePopup();
+    });
+
+    // модалка формы
 
 })()
