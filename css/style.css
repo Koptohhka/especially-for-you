@@ -90,7 +90,6 @@ body {
 .slider__infoitems-wrapper {
     display: flex;
     justify-content: center;
-    gap: 30px;
     flex-wrap: wrap;
 }
 
@@ -102,6 +101,8 @@ body {
     box-shadow: 0 0 40px -20px black;
     cursor: pointer;
     padding: 25px;
+    margin: 20px;
+
     transition: 0.2s;
     -webkit-transition: 0.2s;
     -moz-transition: 0.2s;
@@ -178,7 +179,6 @@ body {
     width: 162px;
     height: 100px;
     background-color: #BFBFBF;
-    cursor: pointer;
     padding: 12px;
     z-index: 1;
     font-size: 29px;
@@ -190,7 +190,8 @@ body {
     -o-transition: 0.2s;
 }
 
-.slider-table__data:hover {
+.slider-table__data:not(.dayNameCell):hover {
+    cursor: pointer;
     background-color: transparent;
 }
 
@@ -259,6 +260,9 @@ body {
 
 .table-popup-list__item:hover {
     outline: 2px solid #A65353;
+    outline-offset: -2px;
+    /*Box-shadow:0px 0px 0px 2px #A65353;*/
+
 }
 
 .form__input {
@@ -346,6 +350,10 @@ body {
         @media(max-width: 520px) {
             .slider__form {
                 width: 100%;
+            }
+
+            .slider__table {
+                
             }
 
             .slider-table__data {
