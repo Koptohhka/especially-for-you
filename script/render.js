@@ -81,7 +81,7 @@
             if (!dataBody[i].isAvailable) {
                 timeCellDisableClass = 'table-popup-list__item--disabled';
             }
-            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeEnd.toLocaleTimeString() + '-' + timeStart.toLocaleTimeString() + '</li>'
+            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeEnd.getHours() + ':' + timeEnd.getMinutes() + '0'+ '-' + timeStart.getHours()+':'+timeStart.getMinutes() + '0' + '</li>'
             timeCellsArray.push(cellsArray);
         }
         cellsContainer.insertAdjacentHTML('afterbegin', timeCellsArray.join(''));
@@ -287,14 +287,32 @@
         toRemoveDisabledClassFromButtons(4);
     }
 
+    function toCheckPhoneValidity(inputTel) {
+        if (inputTel.value.length > 0) {
+            if (inputTel.value.charAt(0) !== '+') {
+                /*inputTel.value = +$ {
+                    inputTel.value.slice(1, inputTel.value.length)
+                };*/
+                inputTel.value = '+'+ inputTel.value.slice(1, inputTel.value.length);
+            }
+            if (inputTel.value.length > 13) {
+                inputTel.value = inputTel.value.slice(0, 13);
+            }
+            inputTel.value = '+' + inputTel.value.slice(1, inputTel.value.length).replace(/[^0-9]/, '');
+        }
+    }
+
+    const phoneInput = form.querySelector('#phone-input');
+    phoneInput.addEventListener('input', function() {
+        toCheckPhoneValidity(phoneInput);
+    })
+
     form.addEventListener('submit', function (evt) {
-        console.log(evt);
-        evt.preventDefault();
+        evt.preventDefault();        
 
         reservationInfo.userInfo.Name = form.querySelector('#name-input').value;
         reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
 
-        console.log(JSON.stringify(reservationInfo));
         let test = JSON.stringify(reservationInfo);
         window.backed.sendRequest('http://45.77.53.136:7000/api/reservations', 'POST', testFunc, test);
 

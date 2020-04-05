@@ -1,57 +1,5 @@
 (function () {
-  //slider
-  const rowLeft = document.getElementById('row-left');
-  const rowRight = document.getElementById('row-right');
-
-  let sliderItems = document.querySelectorAll('.slider-section__slider-item');
-  let currentItem = 0;
-  let isEnabled = true;
-
-  //function changeCurrentItem(num) {
-  //  currentItem = (num + sliderItems.length) % sliderItems.length;
-  //}
-
-  function hideItem(direction) {
-    isEnabled = false;
-    sliderItems[currentItem].classList.add(direction);
-    sliderItems[currentItem].addEventListener('animationend', function () {
-      this.classList.remove('slider-section__slider-item--active', direction);
-    })
-  }
-
-  function showItem(direction) {
-    sliderItems[currentItem].classList.add('slider-section__slider-item--next', direction);
-    sliderItems[currentItem].addEventListener('animationend', function () {
-      this.classList.remove('slider-section__slider-item--next', direction);
-      this.classList.add('slider-section__slider-item--active');
-      isEnabled = true;
-    })
-  }
-
-  function previousItem(num) {
-    hideItem('slider-section__slider-item--to-right');
-    changeCurrentItem(num - 1);
-    showItem('slider-section__slider-item--from-right');
-  }
-
-  function nextItem(num) {
-    hideItem('slider-section__slider-item--to-left');
-    changeCurrentItem(num + 1);
-    showItem('slider-section__slider-item--from-left');
-  }
-
-  rowLeft.addEventListener('click', function () {
-    if (isEnabled) {
-      previousItem(currentItem);
-    }
-  });
-
-  rowRight.addEventListener('click', () => { /////////
-    if (isEnabled) {
-      nextItem(currentItem);
-    }
-  });
-  //phone-activate
+  
 })()
 
 

@@ -20,10 +20,6 @@
         return 'http://45.77.53.136:7000/api/slots?Date=2020-'+month+'-'+day+'+&PlaceId='+placeId;
     }
 
-    function buildReservation() {
-        return 'http://45.77.53.136:7000/api/reservations';
-    }
-
     window.backed = {
         sendRequest: sendRequest,
         buildQuery: buildQuery
