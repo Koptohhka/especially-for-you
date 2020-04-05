@@ -80,12 +80,69 @@ body {
     color: white;
 }
 
-.slider__control-canvas {}
+.slider_control-button--next {
+    position: absolute;
+    top: 0;
+}
 
 .slider__container {
     animation: ease-in-out 1s;
     -webkit-animation: ease-in-out 1s;
+    position: relative;
+
+    /*overflow: hidden;*/
 }
+
+
+
+
+
+.slider__layer--animation-left {
+    animation-duration:1s;
+    animation-name: left;
+}
+
+.slider__layer--animation-right {
+    animation-name: right;
+    animation-duration: 1s;
+}
+
+@keyframes left {
+    from {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+        -moz-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        -o-transform: translateX(-100%);
+    }
+}
+
+@keyframes right {
+    from {
+        transform: translateX(100%);
+        -webkit-transform: translateX(100%);
+        -moz-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+        -o-transform: translateX(100%);
+}
+
+    to {
+        transform: translateX(0);
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        -o-transform: translateX(0);
+}
+}
+
 
 .slider__infoitems-wrapper {
     display: flex;
@@ -175,9 +232,7 @@ body {
     background-color: #231217;
 }
 
-.slider__table {
-    
-}
+.slider__table {}
 
 .slider-table__data {
     position: relative;
@@ -200,6 +255,16 @@ body {
     background-color: transparent;
 }
 
+.slider-table__data--empty {
+    background-color: rgb(92, 90, 90);
+}
+
+.slider-table__data--empty:hover {
+    /*костыль*/
+    cursor: auto !important;
+    background-color: rgb(92, 90, 90) !important;
+}
+
 .slider-table__data--selected {
     background-color: #A65353 !important;
     color: white;
@@ -219,16 +284,6 @@ body {
 .slider-table__row:first-child {
     border-collapse: collapse;
 }
-
-/*.slider-table__day {
-    font-weight: bold;
-    font-size: 16px;
-    margin-bottom: 26px;
-}
-
-.slider-table__date {
-    margin-bottom: auto;
-}*/
 
 .slider__form {
     width: 435px;
@@ -252,7 +307,6 @@ body {
     padding: 10px 20px;
     margin: 10px;
     margin-bottom: 20px;
-    cursor: pointer;
     font-size: 22px;
     transition: 0.2s;
     -webkit-transition: 0.2s;
@@ -266,7 +320,13 @@ body {
     background-color: #A65353;
 }
 
-.table-popup-list__item:hover {
+.table-popup-list__item--disabled {
+    background-color: rgb(146, 146, 146);
+    color: gray;
+}
+
+.table-popup-list__item:not(.table-popup-list__item--disabled):hover {
+    cursor: pointer;
     outline: 2px solid #A65353;
     outline-offset: -2px;
     /*Box-shadow:0px 0px 0px 2px #A65353;*/
@@ -305,9 +365,28 @@ body {
     font-size: 22px;
 }
 
-.footer {
-
+.slider__reset-button {
+    font-size: 18px;
+    background-color: #A65353;
+    width: 230px;
+    height: 50px;
+    margin: 0 auto;
+    display: block;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
 }
+
+.slider__reset-button:hover {
+    opacity: 0.8;
+}
+
+.footer {}
 
 .footer__decorative-element {
     height: 2px;
@@ -401,14 +480,16 @@ body {
             width: 14%;
         }
 
+        .slider__reset-button {
+            width: 40%;
+        }
+
         @media(max-width: 520px) {
             .slider__form {
                 width: 100%;
             }
 
-            .slider__table {
-                
-            }
+            .slider__table {}
 
             .slider-table__data {
                 font-size: 23px;
@@ -430,8 +511,9 @@ body {
             @media(max-width: 390px) {
                 .slider-table__data {
                     font-size: 17px;
-                    
+
                 }
+
                 .popup__text {
                     font-size: 11px;
                     padding-top: 40px;

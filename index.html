@@ -11,12 +11,6 @@
 </head>
 
 <body>
-    <div class="popup-wrapper hidden">
-        <div class="form__popup">
-            <p class="popup__text">Вы успешно забронированы</p>
-            <button class="popup__button">Ок</button>
-        </div>
-    </div>
 
     <main class="main">
 
@@ -35,10 +29,11 @@
                     <div class="slider_control-button slider_control-button--disabled" data-type="1">2</div>
                     <div class="slider_control-button slider_control-button--disabled" data-type="2">3</div>
                     <div class="slider_control-button slider_control-button--disabled" data-type="3">4</div>
+                    <div class="slider_control-button slider_control-button--disabled" data-type="4">5</div>
                 </div>
 
                 <div class="slider__container">
-                    <div class="slider__layer slider__layer--first">
+                    <div class="slider__layer slider__layer--first ">
                         <p class="slider__description">Выберете место</p>
                         <div class="slider__infoitems-wrapper" id="slide-info">
 
@@ -79,11 +74,22 @@
                             <p class="slider__description">Введите ваши данные, чтобы наш менеджер смог с вами
                                 связаться</p>
                             <input type="text" class="form__input" placeholder="Введите ваше имя" id="name-input"
-                                required>
+                                required minlength="3" maxlength="27">
                             <input type="tel" class="form__input" placeholder="Телефон" id="phone-input" min="13"
                                 max="13" required>
                             <button class="form__input form__input--button">Записаться</button>
                         </form>
+                    </div>
+
+                    <div class="slider__layer hidden">
+                        <p class="slider__description">Пасиб за бронь))00))</p>
+                        <button class="slider__reset-button">ОК</button>
+                        <!--<div class="popup-wrapper">
+                            <div class="form__popup">
+                                <p class="popup__text">Вы успешно забронированы</p>
+                                <button class="popup__button">Ок</button>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
             </section>
@@ -105,6 +111,7 @@
     <script src="script/backend.js"></script>
     <script src="script/data.js"></script>
     <script src="script/render.js"></script>
+    <script src="script/slider.js"></script>
     <script src="script/form.js"></script>
 </body>
 

@@ -5,6 +5,15 @@
         time: null
     }
 
+    let reservationInfo = {
+        SlotToken: '',
+        Source: 2,
+        userInfo: {
+            Name: '',
+            PhoneNumber: ''
+        }
+    }
+
     const tableContainer = document.getElementById('slide-table');
     const slideInfoContainer = document.getElementById('slide-info');
 
@@ -13,8 +22,6 @@
 
     function renderInfoItems(data) {
         let bodyOfData = data.body;
-        console.log(bodyOfData);
-
         let infoItemsArray = [];
         for (let i = 0; i < bodyOfData.length; i++) {
             let disabledClass = '';
@@ -37,7 +44,15 @@
         for (let i = 0; i < data.length; i++) {
             let cellsArray = [];
             for (let j = 0; j < data[i].length; j++) {
-                cellsArray.push('<td class="slider-table__data ' + data[i][j].classNum + '">' + data[i][j].dayNumber + '</td>');
+                //let numberOfday = data[i][j].dayNumber;
+                let emptyClass;
+                if (!data[i][j].dayNumber) {
+                    emptyClass = 'slider-table__data--empty';
+                } else {
+                    emptyClass = '';
+                }
+
+                cellsArray.push('<td class="slider-table__data ' + emptyClass + '' + ' ' + data[i][j].classNum + '">' + data[i][j].dayNumber + '</td>');
             }
             let rowItem = '<tr class="slider-table__row">' + cellsArray.join('') + '</tr>';
             rowArray.push(rowItem);
@@ -61,9 +76,12 @@
         for (let i = 0; i < dataBody.length; i++) {
             let timeStart = new Date(dataBody[i].start);
             let timeEnd = new Date(dataBody[i].end);
+            let timeCellDisableClass = '';
 
-            /*let cellsArray = '<li class="table-popup-list__item">'+ timeStart.getHours() + timeStart.getMinutes() + timeEnd.getHours() + timeEnd.getMinutes() +'</li>';*/
-            let cellsArray = '<li id="'+dataBody[i].token+'" class="table-popup-list__item">' + timeEnd.toLocaleTimeString() + '-' + timeStart.toLocaleTimeString() + '</li>'
+            if (!dataBody[i].isAvailable) {
+                timeCellDisableClass = 'table-popup-list__item--disabled';
+            }
+            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeEnd.toLocaleTimeString() + '-' + timeStart.toLocaleTimeString() + '</li>'
             timeCellsArray.push(cellsArray);
         }
         cellsContainer.insertAdjacentHTML('afterbegin', timeCellsArray.join(''));
@@ -73,6 +91,31 @@
     const sliderButtonsContainer = document.querySelector('.slider__control');
     const sliderControlButtons = document.querySelectorAll('.slider_control-button');
     const sliderLayers = document.querySelectorAll('.slider__layer');
+    const formInputButton = document.querySelector('.form__input--button');
+
+    let currentSlideCounter = 0;
+    let nextSlideCounter = 0;
+
+    function addAnimationToleft(eventTarget) {
+        if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
+            for (let i = 0; i < sliderControlButtons.length; i++) {
+                sliderControlButtons[i].classList.remove('slider_control-button--active');
+            }
+            console.log(sliderLayers[parseInt(eventTarget.dataset.type)]);
+            sliderLayers[parseInt(eventTarget.dataset.type)].classList.add('slider__layer--animation-left');
+            sliderLayers[parseInt(eventTarget.dataset.type)].classList.add('.slider_control-button--next');
+        }
+    }
+
+    function addAnimationToRight(eventTarget) {
+        if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
+            for (let i = 0; i < sliderControlButtons.length; i++) {
+                sliderControlButtons[i].classList.remove('slider_control-button--active');
+            }
+            console.log(sliderLayers[parseInt(eventTarget.dataset.type)]);
+            sliderLayers[parseInt(eventTarget.dataset.type)].classList.add('slider__layer--animation-right');
+        }
+    }
 
     function toChangeCurrentSlide(eventTarget) {
         if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
@@ -84,12 +127,14 @@
                 sliderLayers[i].classList.add('hidden');
             }
             sliderLayers[parseInt(eventTarget.dataset.type)].classList.remove('hidden');
+            currentSlideCounter = parseInt(eventTarget.dataset.type);
         }
-        console.log(eventTarget.dataset.type);
+        console.log(currentSlideCounter);
     }
 
     sliderButtonsContainer.addEventListener('click', function (evt) {
-        toChangeCurrentSlide(evt.target);
+        //addAnimationToleft(sliderControlButtons[currentSlideCounter]);
+        setTimeout(toChangeCurrentSlide, 200, evt.target);
     });
 
     // selectFunctions
@@ -97,24 +142,60 @@
 
     function toRemoveDisabledClassFromButtons(sliderStepCounter) {
         sliderControlButtons[sliderStepCounter].classList.remove('slider_control-button--disabled');
-        setTimeout(toChangeCurrentSlide, 900, sliderControlButtons[sliderStepCounter]);
+        //addAnimationToleft(sliderControlButtons[sliderStepCounter]);
+        //addAnimationToRight(sliderControlButtons[currentSlideCounter]);
+        setTimeout(toChangeCurrentSlide, 200, sliderControlButtons[sliderStepCounter]);
+    }
+
+    function toAddDisabledClassToButtons() {
+        for (let i = 1; i < sliderControlButtons.length; i++) {
+            sliderControlButtons[i].classList.add('slider_control-button--disabled');
+        }
+    }
+
+    function toRemoveSelectedClassFromInfoItems() {
+        let infoItemsArray = infoItemsContainer.querySelectorAll('.slider__slider-item');
+        for (let i = 0; i < infoItemsArray.length; i++) {
+            infoItemsArray[i].classList.remove('slider__slider-item--selected');
+        }
+    }
+
+    function toRemoveSelectedClassFromCell() {
+        let cells = document.querySelectorAll('.slider-table__data:not(.dayNameCell)');
+        for (let i = 0; i < cells.length; i++) {
+            cells[i].classList.remove('slider-table__data--selected');
+        }
+    }
+
+    function toRemoveSelectedClassFromTimeCell() {
+        const timeCells = timeCellsContainer.querySelectorAll('.table-popup-list__item');
+        for (let i = 0; i < timeCells.length; i++) {
+            timeCells[i].classList.remove('table-popup-list__item--selected');
+        }
+    }
+
+    function toRemoveTimeCells() {
+        timeCellsContainer.innerHTML = '';
+    }
+
+    function toRemoveTextFromFormFieldData() {
+        let inputs = document.querySelectorAll('.form__input');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].value = '';
+        }
     }
 
     function toSelectInfoItem(evt) {
-        let infoItemsArray = infoItemsContainer.querySelectorAll('.slider__slider-item');
+        //let infoItemsArray = infoItemsContainer.querySelectorAll('.slider__slider-item');
         let targetElement = evt.target;
         if (targetElement.classList.contains('slider__slider-item') && !targetElement.classList.contains('slider__slider-item--disabled')) {
-            for (let i = 0; i < infoItemsArray.length; i++) {
-                infoItemsArray[i].classList.remove('slider__slider-item--selected');
-            }
+            toRemoveSelectedClassFromInfoItems();
             targetElement.classList.add('slider__slider-item--selected');
             userDataObject.selectedPlaceId = targetElement.id;
             toRemoveDisabledClassFromButtons(1);
             sliderStepCounter++;
         } else if (targetElement.parentNode.classList.contains('slider__slider-item') && !targetElement.parentNode.classList.contains('slider__slider-item--disabled')) {
-            for (let i = 0; i < infoItemsArray.length; i++) {
-                infoItemsArray[i].classList.remove('slider__slider-item--selected');
-            }
+            toRemoveSelectedClassFromInfoItems();
             targetElement.parentNode.classList.add('slider__slider-item--selected');
             userDataObject.selectedPlaceId = targetElement.parentNode.id;
             toRemoveDisabledClassFromButtons(1);
@@ -124,15 +205,11 @@
 
     function toSelectCell(evt) {
         let targetElement = evt.target;
-        let cells = document.querySelectorAll('.slider-table__data:not(.dayNameCell)');
-        if (targetElement.classList.contains('slider-table__data') && !targetElement.classList.contains('dayNameCell')) {
-            for (let i = 0; i < cells.length; i++) {
-                cells[i].classList.remove('slider-table__data--selected');
-            }
+        if (targetElement.classList.contains('slider-table__data') && !targetElement.classList.contains('dayNameCell') && !targetElement.classList.contains('slider-table__data--empty')) {
+            toRemoveSelectedClassFromCell();
             targetElement.classList.add('slider-table__data--selected');
             toRemoveDisabledClassFromButtons(2);
             sliderStepCounter++;
-
 
             if (targetElement.textContent < 10) {
                 userDataObject.selectedDay = '0' + targetElement.textContent;
@@ -154,25 +231,79 @@
     }
 
     function toSelectTimeCell(evt) {
-        const timeCells = timeCellsContainer.querySelectorAll('.table-popup-list__item');
-
         let targetElement = evt.target;
-        if (targetElement.classList.contains('table-popup-list__item')) {
-            console.log(1);
-            for (let i = 0; i < timeCells.length; i++) {
-                timeCells[i].classList.remove('table-popup-list__item--selected');
-            }
+        if (targetElement.classList.contains('table-popup-list__item') && !targetElement.classList.contains('table-popup-list__item--disabled')) {
+            toRemoveSelectedClassFromTimeCell();
             targetElement.classList.add('table-popup-list__item--selected');
             toRemoveDisabledClassFromButtons(3);
 
-            window.form.reservationInfo.SlotToken = targetElement.id;
+            console.log(window.form);
+            reservationInfo.SlotToken = targetElement.id;
             console.log(window.form.reservationInfo);
         }
     }
+
+    function toChangeFormSlide() {
+        toRemoveDisabledClassFromButtons(4);
+    }
+
+    const sliderResetButton = document.querySelector('.slider__reset-button');
+
+    function reserAllFileds() {
+        toRemoveSelectedClassFromInfoItems();
+        toRemoveSelectedClassFromCell();
+        toRemoveSelectedClassFromTimeCell();
+        toRemoveTimeCells();
+        toRemoveTextFromFormFieldData();
+        toAddDisabledClassToButtons();
+        toAddDisabledClassToButtons();
+
+        sliderLayers[sliderLayers.length - 1].classList.add('hidden');
+        sliderLayers[0].classList.remove('hidden');
+
+        sliderControlButtons[sliderControlButtons.length - 1].classList.remove('slider_control-button--active');
+        sliderControlButtons[0].classList.add('slider_control-button--active');
+    }
+
+
     //toRemoveDisabledClassFromButtons(3); // временно !!!
 
     timeCellsContainer.addEventListener('click', toSelectTimeCell);
     infoItemsContainer.addEventListener('click', toSelectInfoItem);
+    sliderResetButton.addEventListener('click', reserAllFileds);
+
+    const form = document.querySelector('.slider__form');
+    //const popup = document.querySelector('.popup-wrapper');
+
+    //function closePopup() {
+    //    popup.classList.add('hidden');
+    //}
+
+    function testFunc(data) {
+        console.log(data);
+    }
+
+    function toChangeFormSlide() {
+        toRemoveDisabledClassFromButtons(4);
+    }
+
+    form.addEventListener('submit', function (evt) {
+        console.log(evt);
+        evt.preventDefault();
+
+        reservationInfo.userInfo.Name = form.querySelector('#name-input').value;
+        reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
+
+        console.log(JSON.stringify(reservationInfo));
+        let test = JSON.stringify(reservationInfo);
+        window.backed.sendRequest('http://45.77.53.136:7000/api/reservations', 'POST', testFunc, test);
+
+        toChangeFormSlide();
+    });
+
+    window.form = {
+        reservationInfo: reservationInfo
+    }
 
 })()
 
