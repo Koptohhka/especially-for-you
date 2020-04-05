@@ -21,7 +21,7 @@
     const infoItemsContainer = document.querySelector('.slider__layer--first');
 
     function renderInfoItems(data) {
-        console.log(1);
+        console.log(data);
         let bodyOfData = data.body;
         let infoItemsArray = [];
         for (let i = 0; i < bodyOfData.length; i++) {
@@ -88,7 +88,7 @@
             let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeStart.getHours() + ':' + timeStart.getMinutes() + '0'+ '-' + timeEnd.getHours()+':' + timeEnd.getMinutes() + '0' + '</li>'
             timeCellsArray.push(cellsArray);
         }
-        cellsContainer.insertAdjacentHTML('afterbegin', timeCellsArray.join(''));
+        cellsContainer.innerHTML = timeCellsArray.join('');
     }
 
     const sliderButtonsContainer = document.querySelector('.slider__control');
