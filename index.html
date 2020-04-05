@@ -13,7 +13,7 @@
 <body>
     <div class="popup-wrapper hidden">
         <div class="form__popup">
-            <p class="popup__text">Вы успешно забронировались.</p>
+            <p class="popup__text">Вы успешно забронированы</p>
             <button class="popup__button">Ок</button>
         </div>
     </div>
@@ -32,9 +32,9 @@
             <section class="slider">
                 <div class="slider__control">
                     <div class="slider_control-button slider_control-button--active" data-type="0">1</div>
-                    <div class="slider_control-button" data-type="1">2</div>
-                    <div class="slider_control-button" data-type="2">3</div>
-                    <div class="slider_control-button" data-type="3">4</div>
+                    <div class="slider_control-button slider_control-button--disabled" data-type="1">2</div>
+                    <div class="slider_control-button slider_control-button--disabled" data-type="2">3</div>
+                    <div class="slider_control-button slider_control-button--disabled" data-type="3">4</div>
                 </div>
 
                 <div class="slider__container">
@@ -59,7 +59,7 @@
                     <div class="slider__layer hidden">
                         <p class="slider__description">Выберете время</p>
                         <ul class="table-popup-list">
-                            <li class="table-popup-list__item">00:00</li>
+                            <!--<li class="table-popup-list__item">00:00</li>
                             <li class="table-popup-list__item">00:30</li>
                             <li class="table-popup-list__item">01:00</li>
                             <li class="table-popup-list__item">01:30</li>
@@ -70,7 +70,7 @@
                             <li class="table-popup-list__item">04:00</li>
                             <li class="table-popup-list__item">04:30</li>
                             <li class="table-popup-list__item">05:00</li>
-                            <li class="table-popup-list__item">05:30</li>
+                            <li class="table-popup-list__item">05:30</li>-->
                         </ul>
                     </div>
 
@@ -99,23 +99,13 @@
                 опоздании более чем на 5 минут площадка занимается следующим автомобилем и Вы обслуживаетесь в порядке
                 "живой" очереди. Поэтому настоятельно просим приезжать за 5-10 минут до выбранного вами времени.
             </div>
-
-            <!--<div class="foooter__contacts-container">
-                <div class="contacts-container__copyright">
-                    <a href="" class="contacts-container__copyright-link"> SHINAMINSK.BY</a> / All rights reserved ©
-                </div>
-                <div class="contacts-container__email">
-                    E-mail:<a href="" class="contacts-container__email-link">balalala.16@mail.ru</a>
-                </div>
-                <div class="contacts-container__adress">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Aliquid,
-                    aut.</div>
-            </div>-->
         </div>
     </footer>
 
+    <script src="script/backend.js"></script>
     <script src="script/data.js"></script>
-    <script src="script/script.js"></script>
+    <script src="script/render.js"></script>
+    <script src="script/form.js"></script>
 </body>
 
 </html>

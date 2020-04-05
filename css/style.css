@@ -94,8 +94,6 @@ body {
 }
 
 .slider__slider-item {
-    /*width: 353px;
-    height: 165px;*/
     width: 37%;
     height: 37%;
     background-color: white;
@@ -112,13 +110,18 @@ body {
     -o-transition: 0.2s;
 }
 
-.slider__slider-item:hover {
-    outline: 3px solid #A65353;
+.slider__slider-item--disabled {
+    background-color: rgb(146, 146, 146);
+    color: gray;
 }
 
 .slider__slider-item--selected {
     background-color: #A65353;
     color: white;
+}
+
+.slider__slider-item:not(.slider__slider-item--disabled):hover {
+    outline: 3px solid #A65353;
 }
 
 .slider-item__title {
