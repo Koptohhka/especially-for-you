@@ -21,6 +21,7 @@
     const infoItemsContainer = document.querySelector('.slider__layer--first');
 
     function renderInfoItems(data) {
+        console.log(1);
         let bodyOfData = data.body;
         let infoItemsArray = [];
         for (let i = 0; i < bodyOfData.length; i++) {
@@ -36,7 +37,7 @@
         }
         slideInfoContainer.insertAdjacentHTML('beforeend', infoItemsArray.join(''))
     }
-    window.backed.sendRequest('http://45.77.53.136:7000/api/place?IsActive=true', 'GET', renderInfoItems);
+    window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/place?IsActive=true', 'GET', renderInfoItems);
 
     function renderTable(data) {
         let rowArray = [];
@@ -314,7 +315,7 @@
         reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
 
         let test = JSON.stringify(reservationInfo);
-        window.backed.sendRequest('http://45.77.53.136:7000/api/reservations', 'POST', testFunc, test);
+        window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/reservations', 'POST', testFunc, test);
 
         toChangeFormSlide();
     });
