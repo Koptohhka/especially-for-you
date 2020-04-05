@@ -77,46 +77,25 @@
         for (let i = 0; i < dataBody.length; i++) {
             let timeStart = new Date(dataBody[i].start);
             let timeEnd = new Date(dataBody[i].end);
+            console.log(timeStart.getHours());
+            console.log(timeEnd.getUTCHours() + 6);
+            //console.log(timeEnd);
             let timeCellDisableClass = '';
 
             if (!dataBody[i].isAvailable) {
                 timeCellDisableClass = 'table-popup-list__item--disabled';
             }
-            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeEnd.getHours() + ':' + timeEnd.getMinutes() + '0'+ '-' + timeStart.getHours()+':'+timeStart.getMinutes() + '0' + '</li>'
+            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeStart.getHours() + ':' + timeStart.getMinutes() + '0'+ '-' + timeEnd.getHours()+':' + timeEnd.getMinutes() + '0' + '</li>'
             timeCellsArray.push(cellsArray);
         }
         cellsContainer.insertAdjacentHTML('afterbegin', timeCellsArray.join(''));
     }
-    //window.backed.sendRequest('http://45.77.53.136:7000/api/slots?Date=2020-04-04&PlaceId=2', 'GET', renderTimeCells);
 
     const sliderButtonsContainer = document.querySelector('.slider__control');
     const sliderControlButtons = document.querySelectorAll('.slider_control-button');
     const sliderLayers = document.querySelectorAll('.slider__layer');
     const formInputButton = document.querySelector('.form__input--button');
 
-    let currentSlideCounter = 0;
-    let nextSlideCounter = 0;
-
-    function addAnimationToleft(eventTarget) {
-        if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
-            for (let i = 0; i < sliderControlButtons.length; i++) {
-                sliderControlButtons[i].classList.remove('slider_control-button--active');
-            }
-            console.log(sliderLayers[parseInt(eventTarget.dataset.type)]);
-            sliderLayers[parseInt(eventTarget.dataset.type)].classList.add('slider__layer--animation-left');
-            sliderLayers[parseInt(eventTarget.dataset.type)].classList.add('.slider_control-button--next');
-        }
-    }
-
-    function addAnimationToRight(eventTarget) {
-        if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
-            for (let i = 0; i < sliderControlButtons.length; i++) {
-                sliderControlButtons[i].classList.remove('slider_control-button--active');
-            }
-            console.log(sliderLayers[parseInt(eventTarget.dataset.type)]);
-            sliderLayers[parseInt(eventTarget.dataset.type)].classList.add('slider__layer--animation-right');
-        }
-    }
 
     function toChangeCurrentSlide(eventTarget) {
         if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
@@ -134,7 +113,6 @@
     }
 
     sliderButtonsContainer.addEventListener('click', function (evt) {
-        //addAnimationToleft(sliderControlButtons[currentSlideCounter]);
         setTimeout(toChangeCurrentSlide, 200, evt.target);
     });
 
@@ -143,8 +121,6 @@
 
     function toRemoveDisabledClassFromButtons(sliderStepCounter) {
         sliderControlButtons[sliderStepCounter].classList.remove('slider_control-button--disabled');
-        //addAnimationToleft(sliderControlButtons[sliderStepCounter]);
-        //addAnimationToRight(sliderControlButtons[currentSlideCounter]);
         setTimeout(toChangeCurrentSlide, 200, sliderControlButtons[sliderStepCounter]);
     }
 
