@@ -224,12 +224,14 @@ body {
 }
 
 .table-control__button:hover {
-    background: #231217;
+    background-color: #A65353;
+    opacity: 0.9;
     color: #939393;
 }
 
 .table-control__button--active {
-    background-color: #231217;
+    background-color: #A65353;
+    color: white;
 }
 
 .slider__table {}
@@ -618,6 +620,16 @@ body {
 
                 .form__popup {
                     height: 28%;
+                }
+
+                .table-popup-list {
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center; 
+                }
+
+                .table-popup-list__item  {
+                    
                 }
             }
         }

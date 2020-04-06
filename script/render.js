@@ -32,7 +32,7 @@
                 disabledClass = '';
             }
 
-            let infoItem = '<div id="' + bodyOfData[i].id + '" class="' + disabledClass + 'slider__slider-item"><h3 class="slider-item__title">' + bodyOfData[i].description + '</h3><div class="slider-item__description">' + bodyOfData[i].workingTime + '</div><a href="#" class="slider-item__phone">' + bodyOfData[i].phone + '</a></div>';
+            let infoItem = '<div id="' + bodyOfData[i].id + '" class="' + disabledClass + 'slider__slider-item"><h3 class="slider-item__title">' + bodyOfData[i].description + '</h3><div class="slider-item__description">' + bodyOfData[i].workTime + '</div><a href="#" class="slider-item__phone">' + bodyOfData[i].phone + '</a></div>';
             infoItemsArray.push(infoItem);
         }
         slideInfoContainer.insertAdjacentHTML('beforeend', infoItemsArray.join(''))
@@ -45,7 +45,6 @@
         for (let i = 0; i < data.length; i++) {
             let cellsArray = [];
             for (let j = 0; j < data[i].length; j++) {
-                //let numberOfday = data[i][j].dayNumber;
                 let emptyClass;
                 if (!data[i][j].dayNumber) {
                     emptyClass = 'slider-table__data--empty';
@@ -62,11 +61,7 @@
 
 
         document.querySelector('.slider__table').addEventListener('click', toSelectCell)
-        //document.querySelector('.slider__table').addEventListener('click', function () {
-        //    window.backed.sendRequest('http://45.77.53.136:7000/api/slots?Date=2020-%7BselectedMonth%7D-%7BselectedDay%7D&//PlaceId=%7BselectedPlaceId%7D', 'GET', buildQuery);
-        //});
     }
-    renderTable(window.data.tableDataArray);
 
     function renderTimeCells(data) {
         console.log(data);
@@ -95,7 +90,9 @@
     const sliderControlButtons = document.querySelectorAll('.slider_control-button');
     const sliderLayers = document.querySelectorAll('.slider__layer');
     const formInputButton = document.querySelector('.form__input--button');
+    const tableControlButtonContainer = document.querySelectorAll('.slider__table-control');
 
+    const tableControlButtons = document.querySelectorAll('.table-control__button');
 
     function toChangeCurrentSlide(eventTarget) {
         if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
@@ -115,6 +112,17 @@
     sliderButtonsContainer.addEventListener('click', function (evt) {
         setTimeout(toChangeCurrentSlide, 200, evt.target);
     });
+
+
+    //console.log(tableControlButtons[0].dataset.type);
+    console.log(window.data.test);
+    renderTable(window.data.tableDataArray);
+    
+    //tableControlButtonContainer.addEventListener('click', function(evt) {
+    //    if (evt.target.classList.contains('table-control__button')) {
+    //        //renderTable(window.data.tableDataArray);
+    //    }
+    //})
 
     // selectFunctions
     let sliderStepCounter = 1;
