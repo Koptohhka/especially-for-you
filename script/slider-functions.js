@@ -2,7 +2,6 @@
     let userDataObject = {
         selectedPlaceId: null,
         selectedDay: null,
-        time: null
     }
 
     let reservationInfo = {
@@ -111,6 +110,7 @@
             }
 
             toInnerSpiner();
+            console.log(userDataObject);
             let timeGetUrl = window.backed.buildQuery(04, userDataObject.selectedDay, userDataObject.selectedPlaceId);
             window.backed.sendRequest(timeGetUrl, 'GET', window.render.renderTimeCells)
         }
@@ -129,9 +129,7 @@
             targetElement.classList.add('table-popup-list__item--selected');
             toRemoveDisabledClassFromButtons(3);
 
-            console.log(window.form);
             reservationInfo.SlotToken = targetElement.id;
-            console.log(window.form.reservationInfo);
         }
     }
 
@@ -203,8 +201,7 @@
 
 
         if (evt.originalTarget.querySelector('#phone-input').value.length < 8) {
-            console.log('aSAsaSASSAAS');
-            alert('SSSS')
+            alert('7 символов, цыган')
         } else {
             reservationInfo.userInfo.Name = form.querySelector('#name-input').value;
             reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
