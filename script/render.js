@@ -1,24 +1,11 @@
+// new Date(2014, 9, 25, 0, 0, 0); !!!!!!!!!!!!!!
 (function () {
-    let userDataObject = {
-        selectedPlaceId: null,
-        selectedDay: null,
-        time: null
-    }
-
-    let reservationInfo = {
-        SlotToken: '',
-        Source: 2,
-        userInfo: {
-            Name: '',
-            PhoneNumber: ''
-        }
-    }
-
     const tableContainer = document.getElementById('slide-table');
     const slideInfoContainer = document.getElementById('slide-info');
+    const tableControlButtons = document.querySelectorAll('.table-control__button');
+    const tableControlButtonsContainer = document.querySelector('.slider__table-control');
 
-    const timeCellsContainer = document.querySelector('.table-popup-list');
-    const infoItemsContainer = document.querySelector('.slider__layer--first');
+    let currentDate = new Date();
 
     function renderInfoItems(data) {
         console.log(data);
@@ -39,292 +26,126 @@
     }
     window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/place?IsActive=true', 'GET', renderInfoItems);
 
-    function renderTable(data) {
+    function renderTable(data, flag) {
         let rowArray = [];
+        let currentDate = new Date();
 
         for (let i = 0; i < data.length; i++) {
             let cellsArray = [];
             for (let j = 0; j < data[i].length; j++) {
                 let emptyClass;
+                let dayNumber;
+
+                if (data[i][j].dayNumber === undefined) {
+                    dayNumber = '';
+                } else {
+                    dayNumber = data[i][j].dayNumber;
+                }
+
                 if (!data[i][j].dayNumber) {
                     emptyClass = 'slider-table__data--empty';
                 } else {
                     emptyClass = '';
                 }
 
-                cellsArray.push('<td class="slider-table__data ' + emptyClass + '' + ' ' + data[i][j].classNum + '">' + data[i][j].dayNumber + '</td>');
+                if (flag) {
+                    if (Number(dayNumber) < currentDate.getDate()) {
+                        emptyClass = 'slider-table__data--empty';
+                    } else {
+                        emptyClass = '';
+                    }
+                }
+
+
+                cellsArray.push('<td class="slider-table__data ' + emptyClass + '' + ' ' + data[i][j].classNum + '">' + dayNumber + '</td>');
             }
             let rowItem = '<tr class="slider-table__row">' + cellsArray.join('') + '</tr>';
             rowArray.push(rowItem);
         }
-        tableContainer.insertAdjacentHTML('beforeend', '<table class="slider__table">' + rowArray.join('') + '</table>');
+        tableContainer.innerHTML = '<table class="slider__table">' + rowArray.join('') + '</table>';
 
-
-        document.querySelector('.slider__table').addEventListener('click', toSelectCell)
+        document.querySelector('.slider__table').addEventListener('click', window.slider_functions.toSelectCell)
     }
 
+    let tableDataArray = window.data.toCreateTableData(currentDate.getFullYear(), currentDate.getMonth());
+    renderTable(tableDataArray, true);
+
     function renderTimeCells(data) {
-        console.log(data);
+
+        function toInnerSpiner(container) {
+            let spinerItem = '<div class="loader-container"><div class="loader loader--mod">1</div></div>';
+            container.innerHTML = spinerItem;
+        }
+
+
         const cellsContainer = document.querySelector('.table-popup-list');
+        toInnerSpiner(cellsContainer);
 
         let dataBody = data.body;
         let timeCellsArray = [];
         for (let i = 0; i < dataBody.length; i++) {
             let timeStart = new Date(dataBody[i].start);
             let timeEnd = new Date(dataBody[i].end);
-            console.log(timeStart.getHours());
-            console.log(timeEnd.getUTCHours() + 6);
-            //console.log(timeEnd);
-            let timeCellDisableClass = '';
 
+            let timeCellDisableClass = '';
+            let minutes = timeStart.getMinutes();
+            console.log(minutes);
             if (!dataBody[i].isAvailable) {
                 timeCellDisableClass = 'table-popup-list__item--disabled';
             }
-            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeStart.getHours() + ':' + timeStart.getMinutes() + '0'+ '-' + timeEnd.getHours()+':' + timeEnd.getMinutes() + '0' + '</li>'
+            
+            if (minutes === 0) {
+                minutes = minutes.toString() + '0';
+            } else {
+                minutes = timeStart.getMinutes(); 
+            }
+
+            let cellsArray = '<li id="' + dataBody[i].token + '" class="table-popup-list__item ' + timeCellDisableClass + '">' + timeStart.getHours() + '.'+minutes+'</li>'
             timeCellsArray.push(cellsArray);
         }
         cellsContainer.innerHTML = timeCellsArray.join('');
     }
 
-    const sliderButtonsContainer = document.querySelector('.slider__control');
-    const sliderControlButtons = document.querySelectorAll('.slider_control-button');
-    const sliderLayers = document.querySelectorAll('.slider__layer');
-    const formInputButton = document.querySelector('.form__input--button');
-    const tableControlButtonContainer = document.querySelectorAll('.slider__table-control');
 
-    const tableControlButtons = document.querySelectorAll('.table-control__button');
+    function toAddMonthNames(monthsData) {
+        for (let i = 0; i < tableControlButtons.length; i++) {
+            let monthDataObj = new Date(currentDate.getFullYear(), currentDate.getMonth() + i, currentDate.getDate(), 0, 0, 0);
+            tableControlButtons[i].textContent = monthsData[monthDataObj.getMonth()];
+        }
+    }
+    toAddMonthNames(window.data.monthNames);
 
-    function toChangeCurrentSlide(eventTarget) {
-        if (eventTarget.classList.contains('slider_control-button') && !eventTarget.classList.contains('slider_control-button--disabled')) {
-            for (let i = 0; i < sliderControlButtons.length; i++) {
-                sliderControlButtons[i].classList.remove('slider_control-button--active');
+    function toChangeActiveControlTableButton(targetElement) {
+        for (let i = 0; i < tableControlButtons.length; i++) {
+            if (tableControlButtons[i].classList.contains('table-control__button--active')) {
+                tableControlButtons[i].classList.remove('table-control__button--active');
             }
-            eventTarget.classList.add('slider_control-button--active');
-            for (let i = 0; i < sliderLayers.length; i++) {
-                sliderLayers[i].classList.add('hidden');
-            }
-            sliderLayers[parseInt(eventTarget.dataset.type)].classList.remove('hidden');
-            currentSlideCounter = parseInt(eventTarget.dataset.type);
         }
-        console.log(currentSlideCounter);
+        targetElement.classList.add('table-control__button--active');
     }
 
-    sliderButtonsContainer.addEventListener('click', function (evt) {
-        setTimeout(toChangeCurrentSlide, 200, evt.target);
-    });
-
-
-    //console.log(tableControlButtons[0].dataset.type);
-    console.log(window.data.test);
-    renderTable(window.data.tableDataArray);
-    
-    //tableControlButtonContainer.addEventListener('click', function(evt) {
-    //    if (evt.target.classList.contains('table-control__button')) {
-    //        //renderTable(window.data.tableDataArray);
-    //    }
-    //})
-
-    // selectFunctions
-    let sliderStepCounter = 1;
-
-    function toRemoveDisabledClassFromButtons(sliderStepCounter) {
-        sliderControlButtons[sliderStepCounter].classList.remove('slider_control-button--disabled');
-        setTimeout(toChangeCurrentSlide, 200, sliderControlButtons[sliderStepCounter]);
-    }
-
-    function toAddDisabledClassToButtons() {
-        for (let i = 1; i < sliderControlButtons.length; i++) {
-            sliderControlButtons[i].classList.add('slider_control-button--disabled');
-        }
-    }
-
-    function toRemoveSelectedClassFromInfoItems() {
-        let infoItemsArray = infoItemsContainer.querySelectorAll('.slider__slider-item');
-        for (let i = 0; i < infoItemsArray.length; i++) {
-            infoItemsArray[i].classList.remove('slider__slider-item--selected');
-        }
-    }
-
-    function toRemoveSelectedClassFromCell() {
-        let cells = document.querySelectorAll('.slider-table__data:not(.dayNameCell)');
-        for (let i = 0; i < cells.length; i++) {
-            cells[i].classList.remove('slider-table__data--selected');
-        }
-    }
-
-    function toRemoveSelectedClassFromTimeCell() {
-        const timeCells = timeCellsContainer.querySelectorAll('.table-popup-list__item');
-        for (let i = 0; i < timeCells.length; i++) {
-            timeCells[i].classList.remove('table-popup-list__item--selected');
-        }
-    }
-
-    function toRemoveTimeCells() {
-        timeCellsContainer.innerHTML = '';
-    }
-
-    function toRemoveTextFromFormFieldData() {
-        let inputs = document.querySelectorAll('.form__input');
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].value = '';
-        }
-    }
-
-    function toSelectInfoItem(evt) {
-        //let infoItemsArray = infoItemsContainer.querySelectorAll('.slider__slider-item');
+    function changeMonthTable(evt) {
         let targetElement = evt.target;
-        if (targetElement.classList.contains('slider__slider-item') && !targetElement.classList.contains('slider__slider-item--disabled')) {
-            toRemoveSelectedClassFromInfoItems();
-            targetElement.classList.add('slider__slider-item--selected');
-            userDataObject.selectedPlaceId = targetElement.id;
-            toRemoveDisabledClassFromButtons(1);
-            sliderStepCounter++;
-        } else if (targetElement.parentNode.classList.contains('slider__slider-item') && !targetElement.parentNode.classList.contains('slider__slider-item--disabled')) {
-            toRemoveSelectedClassFromInfoItems();
-            targetElement.parentNode.classList.add('slider__slider-item--selected');
-            userDataObject.selectedPlaceId = targetElement.parentNode.id;
-            toRemoveDisabledClassFromButtons(1);
-            sliderStepCounter++;
+
+        if (targetElement.classList.contains('table-control__button')) {
+            toChangeActiveControlTableButton(targetElement);
+            tableDataArray = window.data.toCreateTableData(currentDate.getFullYear(), currentDate.getMonth() + Number(targetElement.dataset.type));
+            renderTable(tableDataArray, targetElement.dataset.flag);
         }
     }
 
-    function toSelectCell(evt) {
-        let targetElement = evt.target;
-        if (targetElement.classList.contains('slider-table__data') && !targetElement.classList.contains('dayNameCell') && !targetElement.classList.contains('slider-table__data--empty')) {
-            toRemoveSelectedClassFromCell();
-            targetElement.classList.add('slider-table__data--selected');
-            toRemoveDisabledClassFromButtons(2);
-            sliderStepCounter++;
+    tableControlButtonsContainer.addEventListener('click', changeMonthTable);
 
-            if (targetElement.textContent < 10) {
-                userDataObject.selectedDay = '0' + targetElement.textContent;
-            } else {
-                userDataObject.selectedDay = targetElement.textContent;
-            }
-
-            console.log(userDataObject);
-            let timeGetUrl = window.backed.buildQuery(04, userDataObject.selectedDay, userDataObject.selectedPlaceId);
-            window.backed.sendRequest(timeGetUrl, 'GET', renderTimeCells)
-            console.log(timeGetUrl);
-        }
-        //console.log(userDataObject);
-        //let getUrl = buildQuery(04, userDataObject.selectedDay, userDataObject.selectedPlaceId);
-        //console.log(getUrl);
-        //window.backed.sendRequest(getUrl, 'GET', testFunc)
-
-        console.log(userDataObject);
+    window.render = {
+        renderTimeCells: renderTimeCells
     }
-
-    function toSelectTimeCell(evt) {
-        let targetElement = evt.target;
-        if (targetElement.classList.contains('table-popup-list__item') && !targetElement.classList.contains('table-popup-list__item--disabled')) {
-            toRemoveSelectedClassFromTimeCell();
-            targetElement.classList.add('table-popup-list__item--selected');
-            toRemoveDisabledClassFromButtons(3);
-
-            console.log(window.form);
-            reservationInfo.SlotToken = targetElement.id;
-            console.log(window.form.reservationInfo);
-        }
-    }
-
-    function toChangeFormSlide() {
-        toRemoveDisabledClassFromButtons(4);
-    }
-
-    const sliderResetButton = document.querySelector('.slider__reset-button');
-
-    function reserAllFileds() {
-        toRemoveSelectedClassFromInfoItems();
-        toRemoveSelectedClassFromCell();
-        toRemoveSelectedClassFromTimeCell();
-        toRemoveTimeCells();
-        toRemoveTextFromFormFieldData();
-        toAddDisabledClassToButtons();
-        toAddDisabledClassToButtons();
-
-        sliderLayers[sliderLayers.length - 1].classList.add('hidden');
-        sliderLayers[0].classList.remove('hidden');
-
-        sliderControlButtons[sliderControlButtons.length - 1].classList.remove('slider_control-button--active');
-        sliderControlButtons[0].classList.add('slider_control-button--active');
-    }
-
-
-    //toRemoveDisabledClassFromButtons(3); // временно !!!
-
-    timeCellsContainer.addEventListener('click', toSelectTimeCell);
-    infoItemsContainer.addEventListener('click', toSelectInfoItem);
-    sliderResetButton.addEventListener('click', reserAllFileds);
-
-    const form = document.querySelector('.slider__form');
-    //const popup = document.querySelector('.popup-wrapper');
-
-    //function closePopup() {
-    //    popup.classList.add('hidden');
-    //}
-
-    function testFunc(data) {
-        console.log(data);
-    }
-
-    function toChangeFormSlide() {
-        toRemoveDisabledClassFromButtons(4);
-    }
-
-    function toCheckPhoneValidity(inputTel) {
-        if (inputTel.value.length > 0) {
-            if (inputTel.value.charAt(0) !== '+') {
-                /*inputTel.value = +$ {
-                    inputTel.value.slice(1, inputTel.value.length)
-                };*/
-                inputTel.value = '+'+ inputTel.value.slice(1, inputTel.value.length);
-            }
-            if (inputTel.value.length > 13) {
-                inputTel.value = inputTel.value.slice(0, 13);
-            }
-            inputTel.value = '+' + inputTel.value.slice(1, inputTel.value.length).replace(/[^0-9]/, '');
-        }
-    }
-
-    const phoneInput = form.querySelector('#phone-input');
-    phoneInput.addEventListener('input', function() {
-        toCheckPhoneValidity(phoneInput);
-    })
-
-    form.addEventListener('submit', function (evt) {
-        evt.preventDefault();        
-
-        reservationInfo.userInfo.Name = form.querySelector('#name-input').value;
-        reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
-
-        let test = JSON.stringify(reservationInfo);
-        window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/reservations', 'POST', testFunc, test);
-
-        toChangeFormSlide();
-    });
-
-    window.form = {
-        reservationInfo: reservationInfo
-    }
-
 })()
 
 
 /*
-
-let userDataObject = {
-        selectedPlaceId: null,
-        selectedDay: null,
-        time: null
-    }
-
-    function buildQuery(month, day, placeId) {
-        return 'http://45.77.53.136:7000/api/slots?Date=2020-'+month+'-'+day+'+&PlaceId='+placeId;
-    }
-
-    function testFunc(data) {
-        console.log(data);
-    }
-
+const timeCellsContainer = document.querySelector('.table-popup-list');
+    const infoItemsContainer = document.querySelector('.slider__layer--first');
+    const sliderButtonsContainer = document.querySelector('.slider__control');
+    const sliderControlButtons = document.querySelectorAll('.slider_control-button');
+    const sliderLayers = document.querySelectorAll('.slider__layer');
 */

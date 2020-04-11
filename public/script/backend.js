@@ -1,4 +1,6 @@
 (function () {
+    //const mainObjectsUrl = 'http://45.77.53.136:7000/api/place?IsActive=true';
+
     function sendRequest(url, method, callback, sendData) {
         let xhr = new XMLHttpRequest();
         xhr.open(method, url);
@@ -24,12 +26,8 @@
     }
 
     function buildQuery(month, day, placeId) {
-        return 'https://shina-prod.azurewebsites.net/api/slots?Date=2020-'+month+'-'+day+'+&PlaceId='+placeId;
+        return 'https://shina-dev.azurewebsites.net/api/slots?Date=2020-'+month+'-'+day+'+&PlaceId='+placeId;
     }
-
-    /*
-    https://shina-prod.azurewebsites.net/api/slots?Date=2020-4-16+&PlaceId=1
-    */
 
     window.backed = {
         sendRequest: sendRequest,

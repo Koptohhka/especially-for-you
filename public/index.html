@@ -7,8 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
-    <link rel="shortcut icon" href="css/favicon.ico" type="image/png">
-    <title>Shinland - Онлайн запись</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -29,7 +28,7 @@
                     <div class="slider_control-button slider_control-button--active" data-type="0">1</div>
                     <div class="slider_control-button slider_control-button--disabled" data-type="1">2</div>
                     <div class="slider_control-button slider_control-button--disabled" data-type="2">3</div>
-                    <div class="slider_control-button " data-type="3">4</div>
+                    <div class="slider_control-button slider_control-button--disabled" data-type="3">4</div>
                     <div class="slider_control-button slider_control-button--disabled" data-type="4">5</div>
                 </div>
 
@@ -43,26 +42,20 @@
                         </div>
                     </div>
 
-                    <div class="slider__layer hidden">
+                    <div class="slider__layer hidden" id="slide-table">
                         <p class="slider__description">Выберете день</p>
-                        <div class="slider__table-control">
-                            <button class="table-control__button table-control__button--active" data-type="0"
-                                data-flag="true">mock</button>
-                            <button class="table-control__button" data-type="1">mock</button>
-                            <button class="table-control__button" data-type="2">mock</button>
-                        </div>
+                        <!--<div class="slider__table-control">
+                            <button class="table-control__button table-control__button--active"data-type="aprileDays">Апрель</button>
+                            <button class="table-control__button" data-type="mayDays">Май</button>
+                            <button class="table-control__button" data-type="">Июнь</button>
+                        </div>-->
 
-                        <div id="slide-table">
-
-                        </div>
 
                     </div>
 
                     <div class="slider__layer hidden">
                         <p class="slider__description">Выберете время</p>
-                        <p class="slider__description" style="color:brown">ВНИМАНИЕ!!! Обслуживание машин по онлайн
-                            записи производится только на 1-ей площадке. На 2-ой площадке происходит обслуживание по
-                            живой очереди</p>
+                        <p class="slider__description" style="color:brown">ВНИМАНИЕ!!! Обслуживание машин по онлайн записи производится только на 1-ей площадке. На 2-ой площадке происходит обслуживание по живой очереди</p>
                         <ul class="table-popup-list">
                             <div class="loader-container">
                                 <div class="loader loader--mod">1</div>
@@ -76,7 +69,7 @@
                                 связаться</p>
                             <input type="text" class="form__input" placeholder="Введите ваше имя" id="name-input"
                                 required minlength="3" maxlength="27">
-                            <input type="tel" class="form__input" placeholder="Телефон" id="phone-input" min="7"
+                            <input type="tel" class="form__input" placeholder="Телефон" id="phone-input" minlength="7"
                                 max="13" required>
                             <button class="form__input form__input--button">Записаться</button>
                         </form>
@@ -106,17 +99,13 @@
                 опоздании более чем на 5 минут площадка занимается следующим автомобилем и Вы обслуживаетесь в порядке
                 "живой" очереди. Поэтому настоятельно просим приезжать за 5-10 минут до выбранного вами времени.
             </div>
-            <div class="footer__copyright">
-                <a href="http://shinland.by/" class="footer__copyright-link">Сеть профессиональных шиномонтажей</a>
-            </div>
         </div>
     </footer>
 
     <script src="script/backend.js"></script>
     <script src="script/data.js"></script>
-    <script src="script/slider-functions.js"></script>
-    <script src="script/form.js"></script>
     <script src="script/render.js"></script>
+    <script src="script/form.js"></script>
 </body>
 
 </html>

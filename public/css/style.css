@@ -388,9 +388,7 @@ body {
     opacity: 0.8;
 }
 
-.footer {
-    padding-bottom: 40px;
-}
+.footer {}
 
 .footer__decorative-element {
     height: 2px;
