@@ -110,18 +110,17 @@
                 userDataObject.selectedDay = targetElement.textContent;
             }
 
-            console.log(userDataObject);
+            toInnerSpiner();
             let timeGetUrl = window.backed.buildQuery(04, userDataObject.selectedDay, userDataObject.selectedPlaceId);
             window.backed.sendRequest(timeGetUrl, 'GET', window.render.renderTimeCells)
-            console.log(timeGetUrl);
         }
-        //console.log(userDataObject);
-        //let getUrl = buildQuery(04, userDataObject.selectedDay, userDataObject.selectedPlaceId);
-        //console.log(getUrl);
-        //window.backed.sendRequest(getUrl, 'GET', testFunc)
-
-        console.log(userDataObject);
     }
+
+    function toInnerSpiner() {
+        let spinerItem = '<div class="loader-container"><div class="loader loader--mod">1</div></div>';
+        document.querySelector('.table-popup-list').innerHTML = spinerItem;
+    }
+
 
     function toSelectTimeCell(evt) {
         let targetElement = evt.target;

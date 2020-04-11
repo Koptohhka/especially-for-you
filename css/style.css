@@ -259,6 +259,7 @@ body {
 
 .slider-table__data--empty {
     background-color: rgb(92, 90, 90);
+    color: gray;
 }
 
 .slider-table__data--empty:hover {
@@ -413,6 +414,12 @@ body {
     line-height: 16px;
 
     margin-bottom: 40px;
+}
+
+.footer__copyright-link {
+    text-align: center;
+    display: block;
+    color: #A65353;
 }
 
 .popup-wrapper {

@@ -72,14 +72,8 @@
 
     function renderTimeCells(data) {
 
-        function toInnerSpiner(container) {
-            let spinerItem = '<div class="loader-container"><div class="loader loader--mod">1</div></div>';
-            container.innerHTML = spinerItem;
-        }
-
-
         const cellsContainer = document.querySelector('.table-popup-list');
-        toInnerSpiner(cellsContainer);
+        //toInnerSpiner(cellsContainer);
 
         let dataBody = data.body;
         let timeCellsArray = [];

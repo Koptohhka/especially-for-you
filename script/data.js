@@ -49,7 +49,7 @@
             resData[0].push(objectItem);
         }
 
-        for (let i = 2; i <= 7; i++) {
+        for (let i = 2; i <= 6; i++) {
             resData.push([]);
             for (let j = 0; j < daysClasses.length; j++) {
                 let objectItem = new TableDataConstructor(daysArray[tableCellCounter], daysClasses[j]);
