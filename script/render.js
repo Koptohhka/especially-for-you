@@ -1,7 +1,6 @@
-// new Date(2014, 9, 25, 0, 0, 0); !!!!!!!!!!!!!!
 (function () {
-    const tableContainer = document.getElementById('slide-table');
-    const slideInfoContainer = document.getElementById('slide-info');
+    const tableContainer = document.querySelector('#slide-table');
+    const slideInfoContainer = document.querySelector('#slide-info');
     const tableControlButtons = document.querySelectorAll('.table-control__button');
     const tableControlButtonsContainer = document.querySelector('.slider__table-control');
 
@@ -71,9 +70,7 @@
     renderTable(tableDataArray, true);
 
     function renderTimeCells(data) {
-
         const cellsContainer = document.querySelector('.table-popup-list');
-        //toInnerSpiner(cellsContainer);
 
         let dataBody = data.body;
         let timeCellsArray = [];
@@ -135,11 +132,3 @@
     }
 })()
 
-
-/*
-const timeCellsContainer = document.querySelector('.table-popup-list');
-    const infoItemsContainer = document.querySelector('.slider__layer--first');
-    const sliderButtonsContainer = document.querySelector('.slider__control');
-    const sliderControlButtons = document.querySelectorAll('.slider_control-button');
-    const sliderLayers = document.querySelectorAll('.slider__layer');
-*/

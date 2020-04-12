@@ -20,7 +20,6 @@
                 <h2 class="intro__second-title">
                     Онлайн запись
                 </h2>
-                <!--<div class="intro__decorative-element"></div>-->
                 <div class="intro__description">Выберите удобные для вас место, дату и время!</div>
             </section>
 
@@ -78,6 +77,8 @@
                                 required minlength="3" maxlength="27">
                             <input type="tel" class="form__input" placeholder="Телефон" id="phone-input" min="7"
                                 max="13" required>
+                            <textarea class="form__input form__input--textarea" id="comment" name="commentary" id=""
+                                cols="30" rows="60" placeholder="Ваш комментарий..."></textarea>
                             <button class="form__input form__input--button">Записаться</button>
                         </form>
                     </div>
@@ -85,12 +86,6 @@
                     <div class="slider__layer hidden">
                         <p class="slider__description">Спасибо за бронирование!</p>
                         <button class="slider__reset-button">ОК</button>
-                        <!--<div class="popup-wrapper">
-                            <div class="form__popup">
-                                <p class="popup__text">Вы успешно забронированы</p>
-                                <button class="popup__button">Ок</button>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
             </section>
@@ -114,7 +109,7 @@
 
     <script src="script/backend.js"></script>
     <script src="script/data.js"></script>
-    <script src="script/slider-functions.js"></script>
+    <script src="script/select-and-form.js"></script>
     <script src="script/form.js"></script>
     <script src="script/render.js"></script>
 </body>

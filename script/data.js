@@ -6,15 +6,14 @@
 
     const daysNameArray = ['Пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс'];
     const daysClasses = ['monday', 'thusday', 'wendsday', 'thursday', 'friday', 'suturday', 'sunday'];
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
+    const monthNames = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
+        "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
     ]
 
     Date.prototype.daysInMonth = function () {
         return 33 - new Date(this.getFullYear(), this.getMonth(), 33).getDate();
     };
-
-    let argumentDateObj = new Date();
+    
     let tableCellCounter = 0;
 
     function createDayArr(dateObject) {
@@ -39,8 +38,6 @@
     function toCreateTableData(year, month) {
         let resData = [];
         let dateObj = new Date(year, month);
-        console.log(dateObj);
-        console.log(dateObj);
         let daysArray = createDayArr(dateObj);
 
         resData.push([]);

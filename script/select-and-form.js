@@ -9,7 +9,8 @@
         Source: 2,
         userInfo: {
             Name: '',
-            PhoneNumber: ''
+            PhoneNumber: '',
+            comment: ''
         }
     }
 
@@ -110,7 +111,6 @@
             }
 
             toInnerSpiner();
-            console.log(userDataObject);
             let timeGetUrl = window.backed.buildQuery(04, userDataObject.selectedDay, userDataObject.selectedPlaceId);
             window.backed.sendRequest(timeGetUrl, 'GET', window.render.renderTimeCells)
         }
@@ -162,15 +162,15 @@
         setTimeout(toChangeCurrentSlide, 200, evt.target);
     });
 
+
+
     //form
 
-
-
-
-
+    
+    
     const form = document.querySelector('.slider__form');
     const phoneInput = form.querySelector('#phone-input');
-    const formButton = form.querySelector('.form__input form__input--button');
+
 
     function toChangeFormSlide() {
         toRemoveDisabledClassFromButtons(4);
@@ -189,7 +189,7 @@
     }
 
     function testFunc(data) {
-        console.log(data);
+        
     }
 
     phoneInput.addEventListener('input', function () {
@@ -199,13 +199,18 @@
     form.addEventListener('submit', function (evt) {
         evt.preventDefault();
 
+        let phoneInput = evt.originalTarget.querySelector('#phone-input');
 
-        if (evt.originalTarget.querySelector('#phone-input').value.length < 8) {
-            alert('7 символов, цыган')
+        if (phoneInput.value.length < 8) {
+            alert('Минимум 7 символов');
+            //phoneInput.setCustomValidity('минимум 7 символов');
+            //phoneInput.checkValidity();
         } else {
             reservationInfo.userInfo.Name = form.querySelector('#name-input').value;
             reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
+            reservationInfo.userInfo.comment = form.querySelector('#comment').value;
 
+            console.log(reservationInfo);
             window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/reservations', 'POST', testFunc, JSON.stringify(reservationInfo));
 
             toChangeFormSlide();
