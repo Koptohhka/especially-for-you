@@ -199,8 +199,6 @@
     form.addEventListener('submit', function (evt) {
         evt.preventDefault();
 
-        let phoneInput = evt.originalTarget.querySelector('#phone-input');
-
         if (phoneInput.value.length < 8) {
             alert('Минимум 7 символов');
             //phoneInput.setCustomValidity('минимум 7 символов');
@@ -210,7 +208,6 @@
             reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
             reservationInfo.userInfo.comment = form.querySelector('#comment').value;
 
-            console.log(reservationInfo);
             window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/reservations', 'POST', testFunc, JSON.stringify(reservationInfo));
 
             toChangeFormSlide();
