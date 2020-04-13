@@ -80,69 +80,10 @@ body {
     color: white;
 }
 
-.slider_control-button--next {
-    position: absolute;
-    top: 0;
-}
-
-.slider__container {
-    animation: ease-in-out 1s;
-    -webkit-animation: ease-in-out 1s;
-    position: relative;
-
-    /*overflow: hidden;*/
-}
-
-
-
-
-
-.slider__layer--animation-left {
-    animation-duration: 1s;
-    animation-name: left;
-}
-
-.slider__layer--animation-right {
-    animation-name: right;
-    animation-duration: 1s;
-}
-
-@keyframes left {
-    from {
-        transform: translateX(0);
-        -webkit-transform: translateX(0);
-        -moz-transform: translateX(0);
-        -ms-transform: translateX(0);
-        -o-transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(-100%);
-        -webkit-transform: translateX(-100%);
-        -moz-transform: translateX(-100%);
-        -ms-transform: translateX(-100%);
-        -o-transform: translateX(-100%);
-    }
-}
-
-@keyframes right {
-    from {
-        transform: translateX(100%);
-        -webkit-transform: translateX(100%);
-        -moz-transform: translateX(100%);
-        -ms-transform: translateX(100%);
-        -o-transform: translateX(100%);
-    }
-
-    to {
-        transform: translateX(0);
-        -webkit-transform: translateX(0);
-        -moz-transform: translateX(0);
-        -ms-transform: translateX(0);
-        -o-transform: translateX(0);
-    }
-}
-
+/*.slider_control-button--available {
+    background-color: rgb(192, 117, 117);
+    color: white;
+}*/
 
 .slider__infoitems-wrapper {
     display: flex;
@@ -213,7 +154,6 @@ body {
     border: none;
     background-color: transparent;
     margin-right: 10px;
-    cursor: pointer;
     color: #1E1E1E;
 
     transition: 0.3s ease all;
@@ -223,15 +163,16 @@ body {
     -o-transition: 0.3s ease all;
 }
 
-.table-control__button:hover {
-    background-color: #A65353;
-    opacity: 0.9;
-    color: #939393;
-}
-
 .table-control__button--active {
     background-color: #A65353;
     color: white;
+}
+
+.table-control__button:not(.table-control__button--active):hover {
+    background-color: #A65353;
+    opacity: 0.9;
+    color: #939393;
+    cursor: pointer;
 }
 
 .slider-table__data {

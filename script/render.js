@@ -7,18 +7,11 @@
     let currentDate = new Date();
 
     function renderInfoItems(data) {
-        console.log(data);
         let bodyOfData = data.body;
         let infoItemsArray = [];
         for (let i = 0; i < bodyOfData.length; i++) {
-            let disabledClass = '';
-            if (!bodyOfData[i].isActive) {
-                disabledClass = 'slider__slider-item--disabled';
-            } else {
-                disabledClass = '';
-            }
-
-            let infoItem = '<div id="' + bodyOfData[i].id + '" class="' + disabledClass + 'slider__slider-item"><h3 class="slider-item__title">' + bodyOfData[i].description + '</h3><div class="slider-item__description">' + bodyOfData[i].workTime + '</div><a href="#" class="slider-item__phone">' + bodyOfData[i].phone + '</a></div>';
+            
+            let infoItem = '<div id="' + bodyOfData[i].id + '" class="slider__slider-item"><h3 class="slider-item__title">' + bodyOfData[i].description + '</h3><div class="slider-item__description">' + bodyOfData[i].workTime + '</div><a href="#" class="slider-item__phone">' + bodyOfData[i].phone + '</a></div>';
             infoItemsArray.push(infoItem);
         }
         slideInfoContainer.insertAdjacentHTML('beforeend', infoItemsArray.join(''))
@@ -76,11 +69,9 @@
         let timeCellsArray = [];
         for (let i = 0; i < dataBody.length; i++) {
             let timeStart = new Date(dataBody[i].start);
-            let timeEnd = new Date(dataBody[i].end);
 
             let timeCellDisableClass = '';
             let minutes = timeStart.getMinutes();
-            console.log(minutes);
             if (!dataBody[i].isAvailable) {
                 timeCellDisableClass = 'table-popup-list__item--disabled';
             }

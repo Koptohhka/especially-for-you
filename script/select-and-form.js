@@ -7,10 +7,10 @@
     let reservationInfo = {
         SlotToken: '',
         Source: 2,
+        comment: '',
         userInfo: {
             Name: '',
-            PhoneNumber: '',
-            comment: ''
+            PhoneNumber: ''
         }
     }
 
@@ -169,15 +169,33 @@
     
     
     const form = document.querySelector('.slider__form');
+    const nameInput = form.querySelector('#name-input');
+    const commentInput = form.querySelector('#comment');
     const phoneInput = form.querySelector('#phone-input');
-
+    phoneInput.value = '+375';
 
     function toChangeFormSlide() {
         toRemoveDisabledClassFromButtons(4);
     }
 
+    function toCheckInputValidity(text, words) {
+        if (text.length === 0) {
+            return false;
+        }
+        const commentsWords = text.split(' ');
+        for (let i = 0; i < commentsWords.length; i++) {
+            for (let j = 0; j < words.length; j++) {
+                if (commentsWords[i].toLowerCase().includes(words[j].toLowerCase())) {
+                    console.log(commentsWords);
+                    return commentsWords;
+                }
+            }
+        }
+        return false;
+    }
+
     function toCheckPhoneValidity(inputTel) {
-        if (inputTel.value.length > 0) {
+        if (inputTel.value.length > 4) {
             if (inputTel.value.charAt(0) !== '+') {
                 inputTel.value = '+' + inputTel.value.slice(1, inputTel.value.length);
             }
@@ -185,6 +203,8 @@
                 inputTel.value = inputTel.value.slice(0, 13);
             }
             inputTel.value = '+' + inputTel.value.slice(1, inputTel.value.length).replace(/[^0-9]/, '');
+        } else {
+            inputTel.value = '+375';
         }
     }
 
@@ -196,6 +216,22 @@
         toCheckPhoneValidity(phoneInput);
     });
 
+    nameInput.addEventListener('input', function() {
+        if (toCheckInputValidity(nameInput.value, window.data.words)) {
+            nameInput.value = nameInput.value.slice(nameInput.value.length, 1);
+        }
+    });
+
+    commentInput.addEventListener('input', function() {
+        if (toCheckInputValidity(commentInput.value, window.data.words)) {
+            commentInput.value = commentInput.value.slice(commentInput.value.length, commentInput.value.length);
+        }
+    })
+
+
+
+
+
     form.addEventListener('submit', function (evt) {
         evt.preventDefault();
 
@@ -206,9 +242,9 @@
         } else {
             reservationInfo.userInfo.Name = form.querySelector('#name-input').value;
             reservationInfo.userInfo.PhoneNumber = form.querySelector('#phone-input').value;
-            reservationInfo.userInfo.comment = form.querySelector('#comment').value;
-
-            window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/reservations', 'POST', testFunc, JSON.stringify(reservationInfo));
+            reservationInfo.comment = form.querySelector('#comment').value;
+            console.log(reservationInfo);
+            //window.backed.sendRequest('https://shina-dev.azurewebsites.net/api/reservations', 'POST', testFunc, JSON.stringify(reservationInfo));
 
             toChangeFormSlide();
         }
@@ -219,3 +255,5 @@
         toSelectCell: toSelectCell
     }
 })()
+
+
